@@ -7,7 +7,5 @@ import linKav20.github.com.plugins.*
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
         configureRouting()
-        configureSecurity()
-        configureHTTP()
     }.start(wait = true)
 }
