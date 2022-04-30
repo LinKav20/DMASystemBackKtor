@@ -12,13 +12,14 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlin.test.*
 import io.ktor.server.testing.*
-import linKav20.github.com.plugins.*
+import linKav20.github.com.entities.answer.api.configureRoutingAnswers
 
 class ApplicationTest {
     @Test
     fun testRoot() = testApplication {
         application {
-            configureRouting()
+            //configureRouting()
+            configureRoutingAnswers()
         }
         client.get("/").apply {
             assertEquals(HttpStatusCode.OK, status)
