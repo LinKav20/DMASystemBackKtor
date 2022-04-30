@@ -8,6 +8,7 @@ val postgresql_version: String by project
 plugins {
     application
     kotlin("jvm") version "1.6.21"
+    kotlin("plugin.serialization").version("1.6.21")
 }
 
 group = "linKav20.github.com"

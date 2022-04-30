@@ -40,19 +40,17 @@ fun Application.installAuth() {
             }
         }
 
-        val secret = "secret"
-        val issuer = "http://0.0.0.0:8080/"
-        val audience = "http://0.0.0.0:8080/hello"
-        val myRealm = "Access to 'hello'"
-
         jwt("auth-jwt") {
             realm = myRealm
-            verifier(JWT
-                .require(Algorithm.HMAC256(secret))
-                .withAudience(audience)
-                .withIssuer(issuer)
-                .build())
+            verifier(
+                JWT
+                    .require(Algorithm.HMAC256(secret))
+                    .withAudience(audience)
+                    .withIssuer(issuer)
+                    .build()
+            )
             validate { credential ->
+                println(credential.payload.getClaim("username").asString())
                 if (credential.payload.getClaim("username").asString() != "") {
                     JWTPrincipal(credential.payload)
                 } else {

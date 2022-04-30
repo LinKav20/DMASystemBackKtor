@@ -8,6 +8,17 @@ import linKav20.github.com.core.serverSettings
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
-      serverSettings()
+        serverSettings()
     }.start(wait = true)
+
+    embeddedServer(Netty, environment = applicationEngineEnvironment {
+        module {
+            main()
+        }
+
+        connector {
+            port = 8080
+            host = "0.0.0.0"
+        }
+    }).start(true)
 }
