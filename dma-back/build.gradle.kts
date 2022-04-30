@@ -33,9 +33,10 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
-    implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
+
+    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation("io.ktor:ktor-serialization-gson:$ktor_version")
 
@@ -46,4 +47,6 @@ dependencies {
     implementation("com.h2database:h2:$h2_version")
     implementation("org.apache.commons:commons-email:1.5")
     implementation("org.postgresql:postgresql:$postgresql_version")
+
+    implementation("io.ktor:ktor-server-html-builder:$ktor_version")
 }
