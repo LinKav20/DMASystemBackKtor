@@ -5,19 +5,20 @@ import linKav20.github.com.entities.user.tables.UserEntity
 import linKav20.github.com.entities.user.tables.UsersTable
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.math.BigInteger
-import java.security.MessageDigest
+import linKav20.github.com.core.security.*
 
-private fun md5(input: String): String {
-    val md = MessageDigest.getInstance("MD5")
-    return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
-}
-
-fun findUser(user: UserModel): Boolean {
+fun findUser(user: UserModel): UserEntity? {
     val saved = transaction {
-        (UserEntity.find { (UsersTable.login eq user.username) and (UsersTable.password eq md5(user.password)) }).count()
-    }
-    return saved == 1L
+        val users =
+            UserEntity.find { (UsersTable.login eq user.username) and (UsersTable.password eq md5(user.password)) }
+        if (users.count() == 1L) {
+            users.elementAt(0)
+        } else {
+            null
+        }
+    } ?: return null
+
+    return saved
 }
 
 fun addUser(user: UserModel) {
@@ -27,4 +28,17 @@ fun addUser(user: UserModel) {
             password = md5(user.password)
         }
     }
+}
+
+fun toUserModel(userEntity: UserEntity) = UserModel(userEntity.login, userEntity.password)
+
+fun getUsers(): List<UserModel> {
+    val models = mutableListOf<UserModel>()
+    transaction {
+        val users = UserEntity.all()
+        for (user in users) {
+            models.add(toUserModel(user))
+        }
+    }
+    return models
 }

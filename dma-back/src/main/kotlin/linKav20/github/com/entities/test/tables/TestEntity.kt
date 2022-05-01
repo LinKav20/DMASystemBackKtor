@@ -9,12 +9,12 @@ class TestEntity (id: EntityID<Long>) : LongEntity(id) {
     companion object : LongEntityClass<TestEntity>(TestsTable)
 
     var testId by TestsTable.testId
-    val name by TestsTable.name
-    val description by TestsTable.description
-    val creator by UserEntity referencedOn TestsTable.creator
-    val responsible by UserEntity referencedOn TestsTable.responsible
-    val creationDate by TestsTable.creationDate
-    val lastModifiedDate by TestsTable.lastModifiedDate
-    val lastModifiedUser by UserEntity referencedOn TestsTable.lastModifiedUser
-    val testState by TestsTable.testState
+    var name by TestsTable.name
+    var description by TestsTable.description
+    var creator by UserEntity referencedOn TestsTable.creator
+    var responsible by UserEntity referencedOn TestsTable.responsible
+    var creationDate by TestsTable.creationDate
+    var lastModifiedDate by TestsTable.lastModifiedDate
+    var lastModifiedUser by UserEntity referencedOn TestsTable.lastModifiedUser
+    var testState by TestsTable.testState
 }

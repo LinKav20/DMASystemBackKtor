@@ -1,6 +1,6 @@
 package linKav20.github.com.core.databases
 
-import linKav20.github.com.entities.category.categotiesHierarchyTable.CategoriesHierarchyTable
+import linKav20.github.com.entities.category.categotiesHierarchyTable.tables.CategoriesHierarchyTable
 import linKav20.github.com.entities.category.tables.CategoriesTable
 import linKav20.github.com.entities.question.tables.QuestionsTable
 import linKav20.github.com.entities.test.tables.TestsTable

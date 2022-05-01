@@ -18,8 +18,8 @@ data class TestModel(
     @SerializedName("redactors") val redactors: List<UserModel>,
     @SerializedName("categories") val categories: List<CategoryModel>,
     @SerializedName("creation_date") val creationDate: String,
-    @SerializedName("last_modified_date") val lastModifiedDate: String?,
-    @SerializedName("last_modified_person") val lastModifiedUser: UserModel?,
+    @SerializedName("last_modified_date") val lastModifiedDate: String,
+    @SerializedName("last_modified_person") val lastModifiedUser: UserModel,
     @SerializedName("test_status") val testState: TestState,
     @SerializedName("passing") val passing:  List<String>
 );

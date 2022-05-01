@@ -7,6 +7,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.temp.*
+import linKav20.github.com.entities.test.saveTest
 
 fun Application.configureRoutingTests() {
     routing {
@@ -16,9 +17,11 @@ fun Application.configureRoutingTests() {
 
         post("/test/create") {
             val data = call.receive<String>();
-            val gson = GsonBuilder().setPrettyPrinting().create()
 
+            val gson = GsonBuilder().setPrettyPrinting().create()
             val test = gson.fromJson(data, TestModel::class.java)
+            saveTest(test)
+
             call.respond(gson.toJson(test))
         }
 

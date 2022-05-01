@@ -19,7 +19,7 @@ fun Application.configureRoutingAuth() {
         post("/check") {
             val user = call.receive<UserModel>()
 
-            if (findUser(user)) {
+            if (findUser(user) != null) {
                 call.respond(HttpStatusCode.OK, user)
             } else {
                 call.respond(HttpStatusCode.Unauthorized, "User not here")
@@ -29,7 +29,7 @@ fun Application.configureRoutingAuth() {
         post("/login") {
             val user = call.receive<UserModel>()
 
-            if (findUser(user)) {
+            if (findUser(user) != null) {
                 val token = generateJWTToken(user)
                 call.respond(hashMapOf("token" to token))
             } else {

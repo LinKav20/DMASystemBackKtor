@@ -49,17 +49,20 @@ val category2 = CategoryModel("Food", null, listOf(question6, question7, questio
 val category3 = CategoryModel("Drink", null, listOf(question11, question12, question13, question14, question15))
 val category4 = CategoryModel("Food", listOf(category2, category3), null)
 
+val user = UserModel("Lina", "lina")
+val user2 = UserModel("Kosta", "kosta")
+
 fun getTest1(): TestModel {
     val test = TestModel(
         "MyTest",
         "First try",
-        UserModel("Creator", "c"),
-        UserModel("Responsible", "c"),
-        listOf(UserModel("redactor1", "c"), UserModel("redactor2", "c")),
+        user,
+        user,
+        listOf(user, user),
         listOf(category1, category4),
         "01.02.2022",
         "01.02.2022",
-        UserModel("Last", "c"),
+        user,
         TestState.APPROVED,
         listOf("user1@mail.ru", "user1@mail.ru", "user1@mail.ru", "user1@mail.ru")
     )
@@ -78,13 +81,13 @@ fun getTest2(): TestModel {
     val test = TestModel(
         "MyTest",
         "First try",
-        UserModel("Creator", "c"),
-        UserModel("Responsible", "c"),
-        listOf(UserModel("redactor1", "c"), UserModel("redactor2", "c")),
+        user,
+        user,
+        listOf(user, user),
         listOf(category1, category4),
         "01.02.2022",
         "01.02.2022",
-        UserModel("Last", "c"),
+        user,
         TestState.CLOSED,
         listOf("user1@mail.ru", "user1@mail.ru", "user1@mail.ru", "user1@mail.ru")
     )

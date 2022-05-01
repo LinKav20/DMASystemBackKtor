@@ -1,4 +1,4 @@
-package linKav20.github.com.entities.answer.database
+package linKav20.github.com.entities.answer.tables
 
 import linKav20.github.com.entities.question.tables.QuestionEntity
 import org.jetbrains.exposed.dao.LongEntity
