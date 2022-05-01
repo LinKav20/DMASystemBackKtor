@@ -1,20 +1,25 @@
 package linKav20.github.com.entities.test.models
 
+import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import linKav20.github.com.entities.category.models.CategoryModel
 import linKav20.github.com.entities.test.TestState
 import linKav20.github.com.entities.user.models.UserModel
 import java.util.*
 
+@Serializable
 data class TestModel(
-    val id: Int,
-    val name: String,
-    val description: String,
-    val creator: UserModel,
-    val responsible: UserModel,
-    val redactors: List<UserModel>,
-    val categories: List<CategoryModel>,
-    val creationDate: Date,
-    val lastModifiedDate: Date,
-    val lastModifiedUser: UserModel,
-    val testState: TestState
+    @SerializedName("name") val name: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("creator") val creator: UserModel,
+    @SerializedName("responsible") val responsible: UserModel,
+    @SerializedName("redactors") val redactors: List<UserModel>,
+    @SerializedName("categories") val categories: List<CategoryModel>,
+    @SerializedName("creation_date") val creationDate: String,
+    @SerializedName("last_modified_date") val lastModifiedDate: String,
+    @SerializedName("last_modified_person") val lastModifiedUser: UserModel,
+    @SerializedName("test_status") val testState: TestState,
+    @SerializedName("passing") val passing:  List<String>
 );

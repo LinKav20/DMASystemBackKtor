@@ -1,3 +1,10 @@
 package linKav20.github.com.entities.answer.models
 
-data class AnswerModel(val id: Long, val text: String, val weight: Int);
+import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class AnswerModel(
+    @SerializedName("text") val text: String,
+    @SerializedName("weight") val weight: Int
+);
