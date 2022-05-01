@@ -19,7 +19,7 @@ fun Application.configureRoutingTests() {
             val gson = GsonBuilder().setPrettyPrinting().create()
 
             val test = gson.fromJson(data, TestModel::class.java)
-            call.respond(test.categories)
+            call.respond(gson.toJson(test))
         }
 
         get("/test") {

@@ -10,14 +10,13 @@ import io.ktor.server.routing.*
 import linKav20.github.com.entities.temp.addTestUsers
 import linKav20.github.com.entities.user.*
 import linKav20.github.com.entities.user.models.UserModel
-import java.util.*
 
 fun Application.configureRoutingAuth() {
     installAuth()
     addTestUsers()
 
     routing {
-        post("/auth/check") {
+        post("/check") {
             val user = call.receive<UserModel>()
 
             if (findUser(user)) {

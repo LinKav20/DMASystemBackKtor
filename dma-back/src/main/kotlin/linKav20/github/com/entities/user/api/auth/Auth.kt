@@ -9,8 +9,6 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import io.ktor.util.*
 
-val digestFunction = getDigestFunction("SHA-256") { "ktor${it.length}" }
-
 fun Application.installAuth() {
     install(Authentication) {
         jwt("auth-jwt") {
