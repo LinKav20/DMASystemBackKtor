@@ -27,7 +27,7 @@ fun Application.configureRoutingTests() {
         }
 
         get("/test") {
-            val gson = Gson()
+            val gson = GsonBuilder().setPrettyPrinting().create()
 
             if (call.request.queryParameters["id"] != null) {
                 val id = try {

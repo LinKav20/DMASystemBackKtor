@@ -1,5 +1,6 @@
 package linKav20.github.com.entities.test
 
+import linKav20.github.com.entities.category.getCategories
 import linKav20.github.com.entities.category.saveCategory
 import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.test.tables.TestEntity
@@ -40,7 +41,7 @@ fun toTestModel(testEntity: TestEntity): TestModel = transaction {
         lastModifiedDate = testEntity.lastModifiedDate,
         lastModifiedUser = toUserModel(testEntity.responsible),
         testState = TestState.valueOf(testEntity.testState),
-        categories = listOf(),
+        categories = getCategories(testEntity),
         redactors =  getRedactors(testEntity),
         passing = getPassings(testEntity)
     )
