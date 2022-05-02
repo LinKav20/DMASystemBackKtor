@@ -1,7 +1,7 @@
-package linKav20.github.com.entities.category.categotiesHierarchyTable
+package linKav20.github.com.entities.category.categotiesHierarchy
 
-import linKav20.github.com.entities.category.categotiesHierarchyTable.tables.CategoriesHierarchyTable
-import linKav20.github.com.entities.category.categotiesHierarchyTable.tables.CategoryHierarchyEntity
+import linKav20.github.com.entities.category.categotiesHierarchy.tables.CategoriesHierarchyTable
+import linKav20.github.com.entities.category.categotiesHierarchy.tables.CategoryHierarchyEntity
 import linKav20.github.com.entities.category.models.CategoryModel
 import linKav20.github.com.entities.category.tables.CategoriesTable
 import linKav20.github.com.entities.category.tables.CategoryEntity

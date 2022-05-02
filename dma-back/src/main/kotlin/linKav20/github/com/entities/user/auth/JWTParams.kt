@@ -10,12 +10,10 @@ const val issuer = "dma-system"
 const val audience = "dma-system-working"
 const val myRealm = "access-to-dma-system"
 const val alive = 300000
-const val claimLogin = "username"
-const val claimPassword = "password"
 
 fun generateJWTToken(user: UserModel): String = JWT.create()
     .withAudience(audience)
     .withIssuer(issuer)
     .withClaim("username", user.login)
-    .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+    .withExpiresAt(Date(System.currentTimeMillis() + alive))
     .sign(Algorithm.HMAC256(secret))

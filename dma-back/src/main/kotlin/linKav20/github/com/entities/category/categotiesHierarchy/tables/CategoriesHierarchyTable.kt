@@ -1,4 +1,4 @@
-package linKav20.github.com.entities.category.categotiesHierarchyTable.tables
+package linKav20.github.com.entities.category.categotiesHierarchy.tables
 
 import linKav20.github.com.entities.category.tables.CategoriesTable
 import org.jetbrains.exposed.dao.id.LongIdTable

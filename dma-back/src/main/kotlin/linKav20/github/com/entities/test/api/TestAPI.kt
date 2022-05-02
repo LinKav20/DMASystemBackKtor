@@ -1,6 +1,5 @@
 package linKav20.github.com.entities.test.api
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -13,12 +12,9 @@ import linKav20.github.com.entities.test.getTest
 import linKav20.github.com.entities.test.saveTest
 
 fun Application.configureRoutingTests() {
+    val basePath = "test"
     routing {
-        get("/tests") {
-            call.respondText("tests")
-        }
-
-        post("/test/create") {
+        post("/$basePath/create") {
             val data = call.receive<String>();
             val gson = GsonBuilder().setPrettyPrinting().create()
             val test = gson.fromJson(data, TestModel::class.java)
@@ -26,7 +22,7 @@ fun Application.configureRoutingTests() {
             call.respond(gson.toJson(test))
         }
 
-        get("/test") {
+        get("/$basePath") {
             val gson = GsonBuilder().setPrettyPrinting().create()
 
             if (call.request.queryParameters["id"] != null) {

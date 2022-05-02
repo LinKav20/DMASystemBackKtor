@@ -17,9 +17,15 @@ fun Application.configureRoutingAuth() {
 
     routing {
         post("/check") {
-            val user = call.receive<UserModel>()
+            var user: UserModel? = null
 
-            if (findUser(user) != null) {
+            try {
+                user = call.receive<UserModel>()
+            } catch (ex: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "Incorrect user format")
+            }
+
+            if (user != null && findUser(user) != null) {
                 call.respond(HttpStatusCode.OK, user)
             } else {
                 call.respond(HttpStatusCode.Unauthorized, "User not here")
@@ -27,20 +33,40 @@ fun Application.configureRoutingAuth() {
         }
 
         post("/login") {
-            val user = call.receive<UserModel>()
+            var user: UserModel? = null
 
-            if (findUser(user) != null) {
-                val token = generateJWTToken(user)
+            try {
+                user = call.receive<UserModel>()
+            } catch (ex: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "Incorrect user format")
+            }
+
+            if (user != null && findUser(user!!) != null) {
+                val token = generateJWTToken(user!!)
                 call.respond(hashMapOf("token" to token))
             } else {
                 call.respond(HttpStatusCode.Unauthorized, "User not here")
             }
         }
 
-        post("/registration"){
-            val user = call.receive<UserModel>()
-            addUser(user)
-            call.respond(HttpStatusCode.OK)
+        post("/registration") {
+            var user: UserModel? = null
+
+            try {
+                user = call.receive<UserModel>()
+            } catch (ex: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "Incorrect user format")
+            }
+
+            if (user != null) {
+                if (findUserByLogin(user!!) == null) {
+                    addUser(user!!)
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "User with login ${user!!.login} is already exist")
+                }
+            }
+
+            call.respond(HttpStatusCode.OK, "Users successfully registered!")
         }
 
         authenticate("auth-jwt") {
