@@ -1,6 +1,7 @@
 package linKav20.github.com.entities.category
 
 import linKav20.github.com.entities.category.categotiesHierarchyTable.addHierarchy
+import linKav20.github.com.entities.category.categotiesHierarchyTable.replaceSubCategories
 import linKav20.github.com.entities.category.models.CategoryModel
 import linKav20.github.com.entities.category.tables.CategoriesTable
 import linKav20.github.com.entities.category.tables.CategoryEntity
@@ -22,10 +23,10 @@ fun saveCategory(category: CategoryModel, testEntity: TestEntity) {
     transaction {
         val parent = createCategory(category, testEntity)
 
-        if (category.categories == null || category.categories.isEmpty()) {
+        if (category.categories == null || category.categories!!.isEmpty()) {
             saveQuestions(category, parent)
         } else {
-            for (subCategory in category.categories) {
+            for (subCategory in category.categories!!) {
                 val child = createCategory(subCategory, testEntity)
                 saveQuestions(subCategory, child)
                 addHierarchy(parent, child)
@@ -43,14 +44,15 @@ fun createCategory(category: CategoryModel, testEntity: TestEntity) = transactio
 
 fun getCategories(testEntity: TestEntity): List<CategoryModel> {
     val categoryEntities = getCategoriesEntities(testEntity.testId.toLong())
-    val categories = toCategoryModels(categoryEntities)
-
+    val categoriesModels = toCategoryModels(categoryEntities)
+    val categories = replaceSubCategories(categoriesModels)
     return categories
 }
 
 fun toCategoryModel(categoryEntity: CategoryEntity): CategoryModel {
     val category = transaction {
         CategoryModel(
+            id = categoryEntity.categoryId.toLong(),
             name = categoryEntity.name,
             categories = null,
             questions = getQuestions(categoryEntity)

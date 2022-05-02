@@ -44,10 +44,10 @@ val question13 = QuestionModel("Which food is cooler?", listOf(answer14, answer1
 val question14 = QuestionModel("Who is not in restraint?", listOf(answer11, answer12, answer13, answer14))
 val question15 = QuestionModel("What food is more junk?", listOf(answer14, answer15))
 
-val category1 = CategoryModel("Colors", null, listOf(question1, question2, question3, question4, question5))
-val category2 = CategoryModel("Food", null, listOf(question6, question7, question8, question9, question10))
-val category3 = CategoryModel("Drink", null, listOf(question11, question12, question13, question14, question15))
-val category4 = CategoryModel("Food", listOf(category2, category3), null)
+val category1 = CategoryModel(1, "Colors", null, listOf(question1, question2, question3, question4, question5))
+val category2 = CategoryModel(2, "Food", null, listOf(question6, question7, question8, question9, question10))
+val category3 = CategoryModel(3, "Drink", null, listOf(question11, question12, question13, question14, question15))
+val category4 = CategoryModel(4, "Food", listOf(category2, category3), null)
 
 val user = UserModel("Lina", "lina")
 val user2 = UserModel("Kosta", "kosta")
@@ -73,6 +73,7 @@ fun getTest1(): TestModel {
 fun getTest2(): TestModel {
     val question = QuestionModel("What?", listOf(AnswerModel("Ans", 5), AnswerModel("Ans", 5)))
     val category = CategoryModel(
+        5,
         "Category1",
         null,
         listOf(question, question)

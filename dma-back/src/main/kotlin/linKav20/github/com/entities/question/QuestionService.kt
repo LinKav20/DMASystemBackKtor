@@ -26,7 +26,7 @@ fun createQuestion(questionModel: QuestionModel, categoryEntity: CategoryEntity)
 
 fun saveQuestions(category: CategoryModel, categoryEntity: CategoryEntity) {
     if (category.questions != null) {
-        for (question in category.questions) {
+        for (question in category.questions!!) {
             saveQuestion(question, categoryEntity)
         }
     }

@@ -6,7 +6,8 @@ import linKav20.github.com.entities.question.models.QuestionModel
 
 @Serializable
 data class CategoryModel(
-    @SerializedName("name") val name: String,
-    @SerializedName("categories") val categories: List<CategoryModel>?,
-    @SerializedName("questions") val questions: List<QuestionModel>?
+    val id: Long,
+    @SerializedName("name") var name: String,
+    @SerializedName("categories") var categories: List<CategoryModel>?,
+    @SerializedName("questions") var questions: List<QuestionModel>?
 )
