@@ -3,7 +3,7 @@ package linKav20.github.com.entities.category
 import linKav20.github.com.entities.category.categotiesHierarchyTable.addHierarchy
 import linKav20.github.com.entities.category.models.CategoryModel
 import linKav20.github.com.entities.category.tables.CategoryEntity
-import linKav20.github.com.entities.question.saveQuestion
+import linKav20.github.com.entities.question.saveQuestions
 import linKav20.github.com.entities.test.tables.TestEntity
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -35,13 +35,5 @@ fun createCategory(category: CategoryModel, testEntity: TestEntity) = transactio
     CategoryEntity.new {
         name = category.name
         test = testEntity
-    }
-}
-
-fun saveQuestions(category: CategoryModel, categoryEntity: CategoryEntity) {
-    if (category.questions != null) {
-        for (question in category.questions) {
-            saveQuestion(question, categoryEntity)
-        }
     }
 }
