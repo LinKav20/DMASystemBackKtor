@@ -6,11 +6,14 @@ import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.test.tables.TestEntity
 import linKav20.github.com.entities.test.tables.TestsTable
 import linKav20.github.com.entities.user.findUserByLogin
+import linKav20.github.com.entities.user.models.UserModel
 import linKav20.github.com.entities.user.passings.getPassings
 import linKav20.github.com.entities.user.passings.savePassings
 import linKav20.github.com.entities.user.redactors.getRedactors
 import linKav20.github.com.entities.user.redactors.saveRedactors
+import linKav20.github.com.entities.user.tables.UserEntity
 import linKav20.github.com.entities.user.toUserModel
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun saveTest(test: TestModel) {
@@ -42,7 +45,7 @@ fun toTestModel(testEntity: TestEntity): TestModel = transaction {
         lastModifiedUser = toUserModel(testEntity.responsible),
         testState = TestState.valueOf(testEntity.testState),
         categories = getCategories(testEntity),
-        redactors =  getRedactors(testEntity),
+        redactors = getRedactors(testEntity),
         passing = getPassings(testEntity)
     )
 }
@@ -59,4 +62,34 @@ fun getTest(id: Int): TestModel? {
     } ?: return null
 
     return toTestModel(saved)
+}
+
+fun getTestByCreator(userEntity: UserEntity): List<TestModel> {
+    val testEntities = getAllTestsByCreator(userEntity)
+    val tests = toTestModels(testEntities)
+    return tests
+}
+
+private fun toTestModels(testEntity: List<TestEntity>): List<TestModel> {
+    val tests = mutableListOf<TestModel>()
+
+    for (test in testEntity) {
+        tests.add(toTestModel(test))
+    }
+    return tests
+}
+
+private fun getAllTestsByCreator(userEntity: UserEntity): List<TestEntity> {
+    val query = querySQLCreatorTest(userEntity.userId.toLong())
+    val tests = transaction {
+        TestEntity.wrapRows(query).toList()
+    }
+
+    return tests
+}
+
+private fun querySQLCreatorTest(id: Long) = transaction {
+    TestsTable.select {
+        TestsTable.creator eq id
+    }
 }

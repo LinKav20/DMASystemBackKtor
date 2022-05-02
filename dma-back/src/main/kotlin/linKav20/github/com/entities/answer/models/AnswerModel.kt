@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AnswerModel(
+    @SerializedName("answer_id") val id: Int,
     @SerializedName("text") val text: String,
     @SerializedName("weight") val weight: Int
 );

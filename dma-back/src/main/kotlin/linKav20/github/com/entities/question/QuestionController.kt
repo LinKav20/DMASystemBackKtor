@@ -41,6 +41,7 @@ fun getQuestions(categoryEntity: CategoryEntity): List<QuestionModel> {
 
 fun toQuestionModel(questionEntity: QuestionEntity) = transaction {
     QuestionModel(
+        id = questionEntity.questionId,
         question = questionEntity.question,
         answers = getAnswers(questionEntity)
     )

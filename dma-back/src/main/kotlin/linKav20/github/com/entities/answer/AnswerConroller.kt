@@ -31,19 +31,20 @@ fun getAnswers(questionEntity: QuestionEntity): List<AnswerModel> {
     return answers
 }
 
-fun toAnswerModel(answerEntity: AnswerEntity) = AnswerModel(text = answerEntity.text, weight = answerEntity.weight)
+fun toAnswerModel(answerEntity: AnswerEntity) =
+    AnswerModel(id = answerEntity.answerId, text = answerEntity.text, weight = answerEntity.weight)
 
-fun toAnswerModels(answerEntities: List<AnswerEntity>) : List<AnswerModel>{
+fun toAnswerModels(answerEntities: List<AnswerEntity>): List<AnswerModel> {
     val answers = mutableListOf<AnswerModel>()
 
-    for(answerEntity in answerEntities){
+    for (answerEntity in answerEntities) {
         answers.add(toAnswerModel(answerEntity))
     }
 
     return answers
 }
 
-private fun getAnswerEntities(id:Long):List<AnswerEntity>{
+private fun getAnswerEntities(id: Long): List<AnswerEntity> {
     val query = querySQLAnswers(id)
     val answers = transaction {
         AnswerEntity.wrapRows(query).toList()
@@ -52,8 +53,8 @@ private fun getAnswerEntities(id:Long):List<AnswerEntity>{
     return answers
 }
 
-private fun querySQLAnswers(id:Long) = transaction{
-    AnswersTable.select{
+private fun querySQLAnswers(id: Long) = transaction {
+    AnswersTable.select {
         AnswersTable.question eq id
     }
 }

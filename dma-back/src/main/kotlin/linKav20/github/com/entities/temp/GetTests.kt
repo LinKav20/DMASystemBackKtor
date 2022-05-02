@@ -8,41 +8,41 @@ import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.user.models.UserModel
 
 
-val answer1 = AnswerModel("pink", 5)
-val answer2 = AnswerModel("blue", 4)
-val answer3 = AnswerModel("orange", 3)
-val answer4 = AnswerModel("green", 2)
-val answer5 = AnswerModel("black", 1)
+val answer1 = AnswerModel(1, "pink", 5)
+val answer2 = AnswerModel(2, "blue", 4)
+val answer3 = AnswerModel(3, "orange", 3)
+val answer4 = AnswerModel(4, "green", 2)
+val answer5 = AnswerModel(5, "black", 1)
 
-val answer6 = AnswerModel("water", 5)
-val answer7 = AnswerModel("tea", 4)
-val answer8 = AnswerModel("milk", 3)
-val answer9 = AnswerModel("coffee", 2)
-val answer10 = AnswerModel("mineral", 1)
+val answer6 = AnswerModel(1, "water", 5)
+val answer7 = AnswerModel(2, "tea", 4)
+val answer8 = AnswerModel(3, "milk", 3)
+val answer9 = AnswerModel(4, "coffee", 2)
+val answer10 = AnswerModel(5, "mineral", 1)
 
-val answer11 = AnswerModel("donat", 5)
-val answer12 = AnswerModel("salad", 4)
-val answer13 = AnswerModel("egg", 3)
-val answer14 = AnswerModel("chocolate", 2)
-val answer15 = AnswerModel("cake", 1)
+val answer11 = AnswerModel(6, "donat", 5)
+val answer12 = AnswerModel(7, "salad", 4)
+val answer13 = AnswerModel(8, "egg", 3)
+val answer14 = AnswerModel(9, "chocolate", 2)
+val answer15 = AnswerModel(10, "cake", 1)
 
-val question1 = QuestionModel("What is your fav color?", listOf(answer1, answer3, answer5))
-val question2 = QuestionModel("What is most popular color?", listOf(answer2, answer5, answer1))
-val question3 = QuestionModel("Which color is cooler?", listOf(answer4, answer3, answer2))
-val question4 = QuestionModel("Who is not in rainbow?", listOf(answer1, answer2, answer3, answer4))
-val question5 = QuestionModel("What color is darker?", listOf(answer4, answer5))
+val question1 = QuestionModel(1, "What is your fav color?", listOf(answer1, answer3, answer5))
+val question2 = QuestionModel(2, "What is most popular color?", listOf(answer2, answer5, answer1))
+val question3 = QuestionModel(3, "Which color is cooler?", listOf(answer4, answer3, answer2))
+val question4 = QuestionModel(4, "Who is not in rainbow?", listOf(answer1, answer2, answer3, answer4))
+val question5 = QuestionModel(5, "What color is darker?", listOf(answer4, answer5))
 
-val question6 = QuestionModel("What is your fav drink?", listOf(answer6, answer8, answer10))
-val question7 = QuestionModel("What is most popular drink?", listOf(answer7, answer10, answer6))
-val question8 = QuestionModel("Which drink is cooler?", listOf(answer9, answer8, answer7))
-val question9 = QuestionModel("Who is not in shop?", listOf(answer6, answer7, answer8, answer9))
-val question10 = QuestionModel("What drink is healthier?", listOf(answer9, answer10))
+val question6 = QuestionModel(6, "What is your fav drink?", listOf(answer6, answer8, answer10))
+val question7 = QuestionModel(7, "What is most popular drink?", listOf(answer7, answer10, answer6))
+val question8 = QuestionModel(8, "Which drink is cooler?", listOf(answer9, answer8, answer7))
+val question9 = QuestionModel(9, "Who is not in shop?", listOf(answer6, answer7, answer8, answer9))
+val question10 = QuestionModel(10, "What drink is healthier?", listOf(answer9, answer10))
 
-val question11 = QuestionModel("What is your fav food?", listOf(answer11, answer13, answer15))
-val question12 = QuestionModel("What is most popular food?", listOf(answer12, answer15, answer11))
-val question13 = QuestionModel("Which food is cooler?", listOf(answer14, answer13, answer12))
-val question14 = QuestionModel("Who is not in restraint?", listOf(answer11, answer12, answer13, answer14))
-val question15 = QuestionModel("What food is more junk?", listOf(answer14, answer15))
+val question11 = QuestionModel(11, "What is your fav food?", listOf(answer11, answer13, answer15))
+val question12 = QuestionModel(12, "What is most popular food?", listOf(answer12, answer15, answer11))
+val question13 = QuestionModel(13, "Which food is cooler?", listOf(answer14, answer13, answer12))
+val question14 = QuestionModel(14, "Who is not in restraint?", listOf(answer11, answer12, answer13, answer14))
+val question15 = QuestionModel(15, "What food is more junk?", listOf(answer14, answer15))
 
 val category1 = CategoryModel(1, "Colors", null, listOf(question1, question2, question3, question4, question5))
 val category2 = CategoryModel(2, "Food", null, listOf(question6, question7, question8, question9, question10))
@@ -71,7 +71,7 @@ fun getTest1(): TestModel {
 }
 
 fun getTest2(): TestModel {
-    val question = QuestionModel("What?", listOf(AnswerModel("Ans", 5), AnswerModel("Ans", 5)))
+    val question = QuestionModel(16, "What?", listOf(AnswerModel(16, "Ans", 5), AnswerModel(17, "Ans", 5)))
     val category = CategoryModel(
         5,
         "Category1",

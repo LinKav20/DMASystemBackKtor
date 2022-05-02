@@ -6,6 +6,7 @@ import linKav20.github.com.entities.answer.models.AnswerModel
 
 @Serializable
 data class QuestionModel(
+    @SerializedName("question_id") val id: Int,
     @SerializedName("question") val question: String,
     @SerializedName("answers") val answers: List<AnswerModel>
 )

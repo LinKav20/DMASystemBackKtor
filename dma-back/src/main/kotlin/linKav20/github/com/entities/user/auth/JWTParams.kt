@@ -9,7 +9,7 @@ const val secret = "DMA-SYSTEM"
 const val issuer = "dma-system"
 const val audience = "dma-system-working"
 const val myRealm = "access-to-dma-system"
-const val alive = 300000
+const val alive = 3000000
 
 fun generateJWTToken(user: UserModel): String = JWT.create()
     .withAudience(audience)
