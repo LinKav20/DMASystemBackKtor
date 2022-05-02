@@ -18,6 +18,6 @@ fun saveAnswer(answerModel: AnswerModel, questionEntity: QuestionEntity) {
 
 fun saveAnswers(questionModel: QuestionModel, questionEntity: QuestionEntity) {
     for (answer in questionModel.answers) {
-        //saveAnswer(answer, questionEntity)
+        saveAnswer(answer, questionEntity)
     }
 }

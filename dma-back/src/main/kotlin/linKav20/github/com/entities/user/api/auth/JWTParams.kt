@@ -16,6 +16,6 @@ const val claimPassword = "password"
 fun generateJWTToken(user: UserModel): String = JWT.create()
     .withAudience(audience)
     .withIssuer(issuer)
-    .withClaim("username", user.username)
+    .withClaim("username", user.login)
     .withExpiresAt(Date(System.currentTimeMillis() + 60000))
     .sign(Algorithm.HMAC256(secret))

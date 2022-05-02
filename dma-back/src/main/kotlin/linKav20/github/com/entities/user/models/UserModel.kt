@@ -5,6 +5,6 @@ import kotlinx.serialization.*
 
 @Serializable
 data class UserModel(
-    @SerializedName("login") val username: String,
-    @SerializedName("password") val password: String
+    @SerializedName("login") val login: String,
+    @Transient val password: String = ""
 );

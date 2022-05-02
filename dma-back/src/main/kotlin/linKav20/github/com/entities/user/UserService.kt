@@ -10,7 +10,21 @@ import linKav20.github.com.core.security.*
 fun findUser(user: UserModel): UserEntity? {
     val saved = transaction {
         val users =
-            UserEntity.find { (UsersTable.login eq user.username) and (UsersTable.password eq md5(user.password)) }
+            UserEntity.find { (UsersTable.login eq user.login) and (UsersTable.password eq md5(user.password)) }
+        if (users.count() == 1L) {
+            users.elementAt(0)
+        } else {
+            null
+        }
+    } ?: return null
+
+    return saved
+}
+
+fun findUserByLogin(user: UserModel): UserEntity? {
+    val saved = transaction {
+        val users =
+            UserEntity.find { (UsersTable.login eq user.login) }
         if (users.count() == 1L) {
             users.elementAt(0)
         } else {
@@ -24,7 +38,7 @@ fun findUser(user: UserModel): UserEntity? {
 fun addUser(user: UserModel) {
     transaction {
         UserEntity.new {
-            login = user.username
+            login = user.login
             password = md5(user.password)
         }
     }
