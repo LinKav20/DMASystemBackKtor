@@ -4,6 +4,7 @@ import linKav20.github.com.entities.answer.tables.AnswersTable
 import linKav20.github.com.entities.category.categotiesHierarchy.tables.CategoriesHierarchyTable
 import linKav20.github.com.entities.category.tables.CategoriesTable
 import linKav20.github.com.entities.question.tables.QuestionsTable
+import linKav20.github.com.entities.results.tables.ResultsTable
 import linKav20.github.com.entities.test.tables.TestsTable
 import linKav20.github.com.entities.user.passings.tables.PassingsTable
 import linKav20.github.com.entities.user.redactors.tables.RedactorsTable
@@ -21,5 +22,6 @@ fun CreateTables() {
         SchemaUtils.create(RedactorsTable)
         SchemaUtils.create(AnswersTable)
         SchemaUtils.create(PassingsTable)
+        SchemaUtils.create(ResultsTable)
     }
 }

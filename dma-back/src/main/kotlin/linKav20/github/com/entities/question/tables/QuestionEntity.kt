@@ -1,6 +1,5 @@
 package linKav20.github.com.entities.question.tables
 
-import linKav20.github.com.entities.category.tables.CategoriesTable
 import linKav20.github.com.entities.category.tables.CategoryEntity
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
