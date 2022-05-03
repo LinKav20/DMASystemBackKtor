@@ -50,4 +50,6 @@ dependencies {
     implementation("org.postgresql:postgresql:$postgresql_version")
 
     implementation("io.ktor:ktor-server-html-builder:$ktor_version")
+
+    implementation("org.apache.commons:commons-email:1.5")
 }
