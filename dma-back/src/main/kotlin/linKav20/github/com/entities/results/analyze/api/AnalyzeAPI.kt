@@ -24,12 +24,10 @@ fun Application.configureRoutingAnalyze() {
 
                 if (id as Int <= 0) call.respond(HttpStatusCode.BadRequest, "ID must be greater than 0")
                 val analyze = try {
-                    getAnalyze(id)
+                    call.respond(HttpStatusCode.OK, gson.toJson(getAnalyze(id)))
                 } catch (ex: Exception) {
                     call.respond(HttpStatusCode.NotFound, "Cannot find analyze for test with ID $id")
                 }
-
-                call.respond(HttpStatusCode.OK, gson.toJson(analyze as AnalyzeModel))
             }
 
             call.respond(HttpStatusCode.OK)

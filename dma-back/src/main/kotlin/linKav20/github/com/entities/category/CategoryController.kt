@@ -68,6 +68,10 @@ fun toCategoryModel(categoryEntity: CategoryEntity): CategoryModel {
     return category
 }
 
+fun findCategoryById(id:Long) = transaction {
+    CategoryEntity.findById(id)
+}
+
 fun toCategoryModels(categoryEntities: List<CategoryEntity>): List<CategoryModel> {
     val categories = mutableListOf<CategoryModel>()
 

@@ -42,6 +42,7 @@ fun saveTest(test: TestModel) {
 
 fun toTestModel(testEntity: TestEntity): TestModel = transaction {
     TestModel(
+        id = testEntity.testId.toLong(),
         name = testEntity.name,
         description = testEntity.description,
         creator = toUserModel(testEntity.creator),
@@ -69,6 +70,7 @@ fun getTest(id: Int): TestModel {
 
     return toTestModel(saved)
 }
+
 
 fun updateTest(id: Int, newTest: TestModel) {
     var test = findTestById(id.toLong()) ?: throw NullPointerException("Cannot find test with ID $id in the system")
@@ -138,7 +140,7 @@ private fun querySQLResponsibleTest(id: Long) = transaction {
     }
 }
 
-private fun findTestById(id: Long) = transaction {
+fun findTestById(id: Long) = transaction {
     TestEntity.findById(id)
 }
 

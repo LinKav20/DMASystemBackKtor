@@ -38,6 +38,24 @@ fun deleteHierarchy(categoryEntity: CategoryEntity) {
     deleteChildDependency(categoryEntity)
 }
 
+fun getParentString(id: Long): String {
+    val query = transaction {
+        CategoriesHierarchyTable.select {
+            CategoriesHierarchyTable.childCategory eq id
+        }
+    }
+    val results = transaction {
+        CategoryHierarchyEntity.wrapRows(query).toList()
+    }
+    var answer = "";
+    transaction {
+        if(results.isNotEmpty()){
+            answer = results[0].parentCategory.name
+        }
+    }
+    return answer
+}
+
 private fun deleteChildDependency(categoryEntity: CategoryEntity) {
     val query = querySQLCategoryChild(categoryEntity.categoryId.toLong())
     val child = transaction {
