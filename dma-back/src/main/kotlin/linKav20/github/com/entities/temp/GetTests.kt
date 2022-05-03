@@ -54,6 +54,7 @@ val user2 = UserModel("Kosta", "kosta")
 
 fun getTest1(): TestModel {
     val test = TestModel(
+        1,
         "MyTest",
         "First try",
         user,
@@ -80,6 +81,7 @@ fun getTest2(): TestModel {
     )
 
     val test = TestModel(
+        2,
         "MyTest",
         "First try",
         user,

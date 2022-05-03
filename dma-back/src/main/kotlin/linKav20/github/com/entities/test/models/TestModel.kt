@@ -11,6 +11,7 @@ import java.util.*
 
 @Serializable
 data class TestModel(
+    @SerializedName("id") val id: Long,
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String,
     @SerializedName("creator") val creator: UserModel,
