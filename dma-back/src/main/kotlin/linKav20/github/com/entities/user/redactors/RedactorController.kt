@@ -8,6 +8,7 @@ import linKav20.github.com.entities.user.redactors.tables.RedactorEntity
 import linKav20.github.com.entities.user.redactors.tables.RedactorsTable
 import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 import linKav20.github.com.entities.user.basicUser.tables.UsersTable
+import linKav20.github.com.entities.user.passings.tables.PassingEntity
 import linKav20.github.com.entities.user.toUserModel
 import org.jetbrains.exposed.sql.JoinType
 import org.jetbrains.exposed.sql.select
@@ -31,6 +32,11 @@ fun saveRedactor(redactorModel: UserModel, testEntity: TestEntity) {
     }
 }
 
+fun updateRedactors(redactors: List<UserModel>, testEntity: TestEntity) {
+    deleteAllRedactors(testEntity)
+    saveRedactors(redactors, testEntity)
+}
+
 fun getRedactors(testEntity: TestEntity): List<UserModel> {
     val redactorsEntities = getRedactorsEntities(testEntity.testId.toLong())
     val redactors = toRedactorsModel(redactorsEntities)
@@ -38,7 +44,7 @@ fun getRedactors(testEntity: TestEntity): List<UserModel> {
 }
 
 fun getTestsByRedactorFromTable(userEntity: UserEntity): List<TestEntity> {
-   return getTestsEntities(userEntity.userId.toLong())
+    return getTestsEntities(userEntity.userId.toLong())
 }
 
 fun toRedactorsModel(redactorsEntities: List<UserEntity>): List<UserModel> {
@@ -88,4 +94,36 @@ private fun querySQLRedactors(id: Long) = transaction {
         .select {
             RedactorsTable.test eq id
         }.withDistinct()
+}
+
+private fun querySQLRedactorsDependencies(id: Long) = transaction {
+    RedactorsTable.select {
+        RedactorsTable.test eq id
+    }
+}
+
+private fun getRedactorsDependency(id: Long): List<RedactorEntity> {
+    val query = querySQLRedactorsDependencies(id)
+    val depends = transaction {
+        RedactorEntity.wrapRows(query).toList()
+    }
+    return depends
+}
+
+private fun deleteAllRedactors(testEntity: TestEntity) {
+    val redactors = getRedactorsDependency(testEntity.testId.toLong())
+    val entitiesID = getIds(redactors)
+    for (id in entitiesID) {
+        transaction {
+            (RedactorEntity.findById(id))?.delete()
+        }
+    }
+}
+
+private fun getIds(redactorsEntities: List<RedactorEntity>): List<Long> {
+    var ids = mutableListOf<Long>()
+    for (redactor in redactorsEntities) {
+        ids.add(redactor.redactorId.toLong())
+    }
+    return ids
 }

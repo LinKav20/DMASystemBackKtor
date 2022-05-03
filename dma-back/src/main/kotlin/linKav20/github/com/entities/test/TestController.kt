@@ -13,6 +13,7 @@ import linKav20.github.com.entities.user.redactors.getTestsByRedactorFromTable
 import linKav20.github.com.entities.user.redactors.saveRedactors
 import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 import linKav20.github.com.entities.user.passings.updatePassings
+import linKav20.github.com.entities.user.redactors.updateRedactors
 import linKav20.github.com.entities.user.toUserModel
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -154,7 +155,7 @@ private fun updateTest(testEntity: TestEntity, test: TestModel) {
             ?: throw NullPointerException("Cannot find user with login ${test.lastModifiedUser.login} in system")
         testEntity.testState = test.testState.toString()
         updatePassings(test.passing, testEntity)
-        //updateRedactors(test.redactors, testEntity)
+        updateRedactors(test.redactors, testEntity)
         //updateCategory(test.categories, testEntity)
     }
 }
