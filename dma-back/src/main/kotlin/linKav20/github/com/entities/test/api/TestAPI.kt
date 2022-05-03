@@ -8,19 +8,15 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import linKav20.github.com.entities.answer.models.AnswerModel
-import linKav20.github.com.entities.question.models.QuestionModel
 import linKav20.github.com.entities.results.models.PassingChoice
 import linKav20.github.com.entities.results.models.ResultModel
 import linKav20.github.com.entities.results.saveResults
+import linKav20.github.com.entities.temp.getTest1
+import linKav20.github.com.entities.test.*
 import linKav20.github.com.entities.test.models.TestModel
-import linKav20.github.com.entities.temp.*
-import linKav20.github.com.entities.test.getTest
-import linKav20.github.com.entities.test.getTestByCreator
-import linKav20.github.com.entities.test.saveTest
 import linKav20.github.com.entities.user.findUserByLogin
 import linKav20.github.com.entities.user.models.UserModel
-import linKav20.github.com.entities.user.toUserModel
+import linKav20.github.com.entities.user.tables.UserEntity
 
 fun Application.configureRoutingTests() {
     val basePath = "test"
@@ -28,7 +24,7 @@ fun Application.configureRoutingTests() {
 
     routing {
         post("/$basePath/create") {
-            val data = call.receive<String>();
+            val data = call.receive<String>()
 
             var test: TestModel? = null
             try {
@@ -59,7 +55,7 @@ fun Application.configureRoutingTests() {
 
                 if (id as Int <= 0) call.respond(HttpStatusCode.BadRequest, "ID must be greater than 0")
                 val test = try {
-                    getTest(id as Int)
+                    getTest(id)
                 } catch (ex: Exception) {
                     call.respond(HttpStatusCode.NotFound, "Cannot find test with ID $id")
                 }
@@ -75,19 +71,29 @@ fun Application.configureRoutingTests() {
                 val principal = call.principal<JWTPrincipal>()
                 val username = principal!!.payload.getClaim("username").asString()
 
-                val user = findUserByLogin(UserModel(username, "lol"))!!
-                var tests = getTestByCreator(user)
+                val user = findUserByLogin(UserModel(username, "lol")) ?: call.respond(
+                    HttpStatusCode.BadRequest,
+                    "Cannot find user with login $username in system"
+                )
+                val tests = getTestsByCreator(user as UserEntity).plus(getTestsByResponsible(user)).plus(getTestsByRedactor(user))
                 call.respond(HttpStatusCode.OK, gson.toJson(tests))
             }
         }
 
         get("/try") {
-            val res = ResultModel("me@mail.me", listOf(PassingChoice(1, 2), PassingChoice(2, 2), PassingChoice(3, 5)))
+            val res = ResultModel(
+                "me@mail.me",
+                listOf(
+                    PassingChoice(1, 2),
+                    PassingChoice(2, 2),
+                    PassingChoice(3, 5)
+                )
+            )
             call.respond(gson.toJson(res))
         }
 
         post("/$basePath/pass") {
-            val data = call.receive<String>();
+            val data = call.receive<String>()
 
             var result: ResultModel? = null
             try {

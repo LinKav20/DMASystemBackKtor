@@ -1,5 +1,6 @@
 package linKav20.github.com.entities.user.redactors
 
+import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.test.tables.TestEntity
 import linKav20.github.com.entities.test.tables.TestsTable
 import linKav20.github.com.entities.user.findUserByLogin
@@ -39,6 +40,10 @@ fun getRedactors(testEntity: TestEntity): List<UserModel> {
     return redactors
 }
 
+fun getTestsByRedactorFromTable(userEntity: UserEntity): List<TestEntity> {
+   return getTestsEntities(userEntity.userId.toLong())
+}
+
 fun toRedactorsModel(redactorsEntities: List<UserEntity>): List<UserModel> {
     val redactors = mutableListOf<UserModel>()
 
@@ -60,11 +65,29 @@ private fun getRedactorsEntities(id: Long): List<UserEntity> {
     return redactorsEntities
 }
 
+private fun getTestsEntities(id: Long): List<TestEntity> {
+    val query = querySQLTestsByRedactor(id)
+    val tests = transaction {
+        TestEntity.wrapRows(query).toList()
+    }
+    return tests
+}
+
+private fun querySQLTestsByRedactor(id: Long) = transaction {
+    TestsTable.join(
+        RedactorsTable,
+        JoinType.INNER,
+        additionalConstraint = { TestsTable.testId eq RedactorsTable.test })
+        .select {
+            RedactorsTable.redactor eq id
+        }.withDistinct()
+}
+
 private fun querySQLRedactors(id: Long) = transaction {
     UsersTable.join(
         RedactorsTable,
         JoinType.INNER,
-        additionalConstraint = { UsersTable.userId eq RedactorsTable.redactorId })
+        additionalConstraint = { UsersTable.userId eq RedactorsTable.redactor })
         .select {
             RedactorsTable.test eq id
         }.withDistinct()

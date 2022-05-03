@@ -10,6 +10,7 @@ import linKav20.github.com.entities.user.models.UserModel
 import linKav20.github.com.entities.user.passings.getPassings
 import linKav20.github.com.entities.user.passings.savePassings
 import linKav20.github.com.entities.user.redactors.getRedactors
+import linKav20.github.com.entities.user.redactors.getTestsByRedactorFromTable
 import linKav20.github.com.entities.user.redactors.saveRedactors
 import linKav20.github.com.entities.user.tables.UserEntity
 import linKav20.github.com.entities.user.toUserModel
@@ -53,7 +54,7 @@ fun toTestModel(testEntity: TestEntity): TestModel = transaction {
     )
 }
 
-fun getTest(id: Int): TestModel? {
+fun getTest(id: Int): TestModel {
     val saved = transaction {
         val test =
             TestEntity.find { (TestsTable.testId eq id) }
@@ -67,8 +68,20 @@ fun getTest(id: Int): TestModel? {
     return toTestModel(saved)
 }
 
-fun getTestByCreator(userEntity: UserEntity): List<TestModel> {
+fun getTestsByCreator(userEntity: UserEntity): List<TestModel> {
     val testEntities = getAllTestsByCreator(userEntity)
+    val tests = toTestModels(testEntities)
+    return tests
+}
+
+fun getTestsByResponsible(userEntity: UserEntity): List<TestModel>{
+    val testEntities = getAllTestsByResponsible(userEntity)
+    val tests = toTestModels(testEntities)
+    return tests
+}
+
+fun getTestsByRedactor(userEntity: UserEntity): List<TestModel>{
+    val testEntities = getAllTestsByRedactor(userEntity)
     val tests = toTestModels(testEntities)
     return tests
 }
@@ -79,6 +92,21 @@ private fun toTestModels(testEntity: List<TestEntity>): List<TestModel> {
     for (test in testEntity) {
         tests.add(toTestModel(test))
     }
+    return tests
+}
+
+private fun getAllTestsByRedactor(userEntity: UserEntity): List<TestEntity> {
+    val tests = getTestsByRedactorFromTable(userEntity)
+
+    return tests
+}
+
+private fun getAllTestsByResponsible(userEntity: UserEntity): List<TestEntity> {
+    val query = querySQLResponsibleTest(userEntity.userId.toLong())
+    val tests = transaction {
+        TestEntity.wrapRows(query).toList()
+    }
+
     return tests
 }
 
@@ -94,5 +122,11 @@ private fun getAllTestsByCreator(userEntity: UserEntity): List<TestEntity> {
 private fun querySQLCreatorTest(id: Long) = transaction {
     TestsTable.select {
         TestsTable.creator eq id
+    }
+}
+
+private fun querySQLResponsibleTest(id: Long) = transaction {
+    TestsTable.select {
+        TestsTable.responsible eq id
     }
 }
