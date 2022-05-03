@@ -1,5 +1,6 @@
 package linKav20.github.com.entities.question
 
+import linKav20.github.com.entities.answer.deleteAllAnswers
 import linKav20.github.com.entities.answer.getAnswers
 import linKav20.github.com.entities.answer.saveAnswers
 import linKav20.github.com.entities.category.models.CategoryModel
@@ -32,7 +33,7 @@ fun saveQuestions(category: CategoryModel, categoryEntity: CategoryEntity) {
     }
 }
 
-fun findQuestionById(id:Long) = transaction {
+fun findQuestionById(id: Long) = transaction {
     QuestionEntity.findById(id)
 }
 
@@ -58,6 +59,34 @@ private fun toQuestionModels(questionEntities: List<QuestionEntity>): List<Quest
         questions.add(toQuestionModel(question))
     }
     return questions
+}
+
+fun deleteAllQuestions(categoryEntity: CategoryEntity) {
+    deleteAll(categoryEntity.categoryId.toLong())
+}
+
+private fun deleteAll(id: Long) {
+    val questions = getQuestionEntities(id)
+    val ids = getIds(questions)
+    transaction {
+        for (iD in ids) {
+            val question = (QuestionEntity.findById(iD))
+            if (question != null) {
+                deleteAllAnswers(question)
+                question.delete()
+            }
+        }
+    }
+}
+
+private fun getIds(questionEntities: List<QuestionEntity>): MutableList<Long> {
+    val ids = mutableListOf<Long>()
+    transaction {
+        for (question in questionEntities) {
+            ids.add(question.questionId.toLong())
+        }
+    }
+    return ids
 }
 
 private fun getQuestionEntities(id: Long): List<QuestionEntity> {

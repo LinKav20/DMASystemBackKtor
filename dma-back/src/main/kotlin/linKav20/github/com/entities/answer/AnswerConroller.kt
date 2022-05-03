@@ -51,6 +51,26 @@ fun toAnswerModels(answerEntities: List<AnswerEntity>): List<AnswerModel> {
     return answers
 }
 
+fun deleteAllAnswers(questionEntity: QuestionEntity) {
+    val answers = getAnswerEntities(questionEntity.questionId.toLong())
+    val ids = getIds(answers)
+    for (id in ids) {
+        transaction {
+            (AnswerEntity.findById(id))?.delete()
+        }
+    }
+}
+
+private fun getIds(answerEntities: List<AnswerEntity>): MutableList<Long> {
+    val ids = mutableListOf<Long>()
+    for (answer in answerEntities) {
+        transaction {
+            ids.add(answer.answerId.toLong())
+        }
+    }
+    return ids;
+}
+
 private fun getAnswerEntities(id: Long): List<AnswerEntity> {
     val query = querySQLAnswers(id)
     val answers = transaction {

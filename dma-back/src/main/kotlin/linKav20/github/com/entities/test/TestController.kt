@@ -2,6 +2,7 @@ package linKav20.github.com.entities.test
 
 import linKav20.github.com.entities.category.getCategories
 import linKav20.github.com.entities.category.saveCategory
+import linKav20.github.com.entities.category.updateCategories
 import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.test.tables.TestEntity
 import linKav20.github.com.entities.test.tables.TestsTable
@@ -156,6 +157,6 @@ private fun updateTest(testEntity: TestEntity, test: TestModel) {
         testEntity.testState = test.testState.toString()
         updatePassings(test.passing, testEntity)
         updateRedactors(test.redactors, testEntity)
-        //updateCategory(test.categories, testEntity)
+        updateCategories(test.categories, testEntity)
     }
 }

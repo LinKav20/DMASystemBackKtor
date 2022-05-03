@@ -1,10 +1,12 @@
 package linKav20.github.com.entities.category
 
 import linKav20.github.com.entities.category.categotiesHierarchy.addHierarchy
+import linKav20.github.com.entities.category.categotiesHierarchy.deleteHierarchy
 import linKav20.github.com.entities.category.categotiesHierarchy.replaceSubCategories
 import linKav20.github.com.entities.category.models.CategoryModel
 import linKav20.github.com.entities.category.tables.CategoriesTable
 import linKav20.github.com.entities.category.tables.CategoryEntity
+import linKav20.github.com.entities.question.deleteAllQuestions
 import linKav20.github.com.entities.question.getQuestions
 import linKav20.github.com.entities.question.saveQuestions
 import linKav20.github.com.entities.test.tables.TestEntity
@@ -40,6 +42,11 @@ fun createCategory(category: CategoryModel, testEntity: TestEntity) = transactio
         name = category.name
         test = testEntity
     }
+}
+
+fun updateCategories(categories: List<CategoryModel>, testEntity: TestEntity) {
+    deleteAllCategories(testEntity);
+    saveCategory(categories, testEntity)
 }
 
 fun getCategories(testEntity: TestEntity): List<CategoryModel> {
@@ -85,4 +92,19 @@ private fun querySQLCategories(id: Long) = transaction {
         .select {
             CategoriesTable.test eq id
         }
+}
+
+private fun deleteAllCategories(testEntity: TestEntity) {
+    val categories = toCategoryModels(getCategoriesEntities(testEntity.testId.toLong()))
+    transaction {
+        for (category in categories) {
+            val cat = CategoryEntity.findById(category.id)
+            if (cat != null) {
+                deleteAllQuestions(cat)
+                deleteHierarchy(cat)
+                cat.delete()
+                println("Category ${category.id} deleted")
+            }
+        }
+    }
 }

@@ -91,7 +91,7 @@ fun Application.configureRoutingTests() {
                 val test = try {
                     updateTest(id, newTest!!)
                 } catch (ex: Exception) {
-                    call.respond(HttpStatusCode.NotFound, "Cannot find test with ID $id")
+                    call.respond(HttpStatusCode.NotFound, "Cannot update test: ${ex.message}")
                 }
 
                 call.respond(HttpStatusCode.OK, gson.toJson(getTest(id as Int)))

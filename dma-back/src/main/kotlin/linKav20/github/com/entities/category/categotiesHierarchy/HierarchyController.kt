@@ -25,12 +25,62 @@ fun replaceSubCategories(categoryModels: List<CategoryModel>): List<CategoryMode
         if (categoryIsParent(category)) {
             setSubCategories(category, categoryModels)
             categories.add(category)
-        }else if (!categoryIsChild(category)){
+        } else if (!categoryIsChild(category)) {
             categories.add(category)
         }
         println("${category.name} is parent: ${categoryIsParent(category)}")
     }
     return categories
+}
+
+fun deleteHierarchy(categoryEntity: CategoryEntity) {
+    deleteParentDependency(categoryEntity)
+    deleteChildDependency(categoryEntity)
+}
+
+private fun deleteChildDependency(categoryEntity: CategoryEntity) {
+    val query = querySQLCategoryChild(categoryEntity.categoryId.toLong())
+    val child = transaction {
+        CategoryHierarchyEntity.wrapRows(query).toList()
+    }
+    deleteAllDependencies(child)
+}
+
+private fun deleteParentDependency(categoryEntity: CategoryEntity) {
+    val query = querySQLCategoryParent(categoryEntity.categoryId.toLong())
+    val parents = transaction {
+        CategoryHierarchyEntity.wrapRows(query).toList()
+    }
+    deleteAllDependencies(parents)
+}
+
+private fun deleteAllDependencies(depends: List<CategoryHierarchyEntity>) {
+    val ids = getIds(depends)
+    transaction {
+        for (id in ids) {
+            (CategoryHierarchyEntity.findById(id))?.delete()
+        }
+    }
+}
+
+private fun getIds(depends: List<CategoryHierarchyEntity>): MutableList<Long> {
+    val ids = mutableListOf<Long>()
+    for (depend in depends) {
+        ids.add(depend.hierarchyId.toLong())
+    }
+    return ids;
+}
+
+private fun querySQLCategoryParent(id: Long) = transaction {
+    CategoriesHierarchyTable.select {
+        CategoriesHierarchyTable.parentCategory eq id
+    }
+}
+
+private fun querySQLCategoryChild(id: Long) = transaction {
+    CategoriesHierarchyTable.select {
+        CategoriesHierarchyTable.childCategory eq id
+    }
 }
 
 private fun categoryIsParent(categoryModel: CategoryModel): Boolean {
