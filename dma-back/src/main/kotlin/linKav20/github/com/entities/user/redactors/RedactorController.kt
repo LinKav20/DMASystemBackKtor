@@ -26,7 +26,8 @@ fun saveRedactors(redactors: List<UserModel>, testEntity: TestEntity) {
 fun saveRedactor(redactorModel: UserModel, testEntity: TestEntity) {
     transaction {
         RedactorEntity.new {
-            redactor = findUserByLogin(redactorModel)!!
+            redactor = findUserByLogin(redactorModel)
+                ?: throw NullPointerException("Cannot find user with login ${redactorModel.login} in system")
             test = testEntity
         }
     }
@@ -38,7 +39,7 @@ fun getRedactors(testEntity: TestEntity): List<UserModel> {
     return redactors
 }
 
-fun toRedactorsModel(redactorsEntities: List<UserEntity>):List<UserModel>{
+fun toRedactorsModel(redactorsEntities: List<UserEntity>): List<UserModel> {
     val redactors = mutableListOf<UserModel>()
 
     transaction {
@@ -59,7 +60,7 @@ private fun getRedactorsEntities(id: Long): List<UserEntity> {
     return redactorsEntities
 }
 
-private fun querySQLRedactors(id:Long) = transaction {
+private fun querySQLRedactors(id: Long) = transaction {
     UsersTable.join(
         RedactorsTable,
         JoinType.INNER,

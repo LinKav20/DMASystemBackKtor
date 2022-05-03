@@ -29,7 +29,7 @@ fun getPassings(testEntity: TestEntity): List<String> {
     return passings
 }
 
-fun toPassingsToString(passingEntities: List<PassingEntity>):List<String>{
+fun toPassingsToString(passingEntities: List<PassingEntity>): List<String> {
     val passings = mutableListOf<String>()
 
     transaction {
@@ -41,6 +41,17 @@ fun toPassingsToString(passingEntities: List<PassingEntity>):List<String>{
     return passings
 }
 
+fun findPassingByMail(mail: String): PassingEntity? {
+    val query = querySQLFindPassingByMail(mail)
+    val passings = transaction {
+        PassingEntity.wrapRows(query).toList()
+    }
+    val passing = transaction {
+        if (passings.isEmpty()) null else passings[0]
+    }
+    return passing
+}
+
 private fun getPassingsEntities(id: Long): List<PassingEntity> {
     val query = querySQLPassings(id)
     val passingEntities = transaction {
@@ -48,6 +59,10 @@ private fun getPassingsEntities(id: Long): List<PassingEntity> {
     }
 
     return passingEntities
+}
+
+private fun querySQLFindPassingByMail(mail: String) = transaction {
+    PassingsTable.select { PassingsTable.mail eq mail }
 }
 
 

@@ -12,6 +12,7 @@ import linKav20.github.com.entities.answer.models.AnswerModel
 import linKav20.github.com.entities.question.models.QuestionModel
 import linKav20.github.com.entities.results.models.PassingChoice
 import linKav20.github.com.entities.results.models.ResultModel
+import linKav20.github.com.entities.results.saveResults
 import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.temp.*
 import linKav20.github.com.entities.test.getTest
@@ -39,8 +40,12 @@ fun Application.configureRoutingTests() {
             if (test == null) {
                 call.respond(HttpStatusCode.BadRequest, "Test is null")
             } else {
-                saveTest(test)
-                call.respond(HttpStatusCode.OK, "Test saved successfully!")
+                try {
+                    saveTest(test)
+                    call.respond(HttpStatusCode.OK, "Test saved successfully!")
+                } catch (ex: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Cannot save test: ${ex.message}")
+                }
             }
         }
 
@@ -52,6 +57,7 @@ fun Application.configureRoutingTests() {
                     call.respond(HttpStatusCode.BadRequest, "ID must be integer value")
                 }
 
+                if (id as Int <= 0) call.respond(HttpStatusCode.BadRequest, "ID must be greater than 0")
                 val test = try {
                     getTest(id as Int)
                 } catch (ex: Exception) {
@@ -80,21 +86,25 @@ fun Application.configureRoutingTests() {
             call.respond(gson.toJson(res))
         }
 
-        get("/$basePath/pass") {
+        post("/$basePath/pass") {
             val data = call.receive<String>();
 
             var result: ResultModel? = null
             try {
                 result = gson.fromJson(data, ResultModel::class.java)
             } catch (ex: Exception) {
-                call.respond(HttpStatusCode.BadRequest, "Incorrect test format")
+                call.respond(HttpStatusCode.BadRequest, "Incorrect result format")
             }
 
             if (result == null) {
-                call.respond(HttpStatusCode.BadRequest, "Test is null")
+                call.respond(HttpStatusCode.BadRequest, "Result is null")
             } else {
-                saveTest(getTest1())
-                call.respond(HttpStatusCode.OK, "Test saved successfully!")
+                try {
+                    saveResults(result)
+                    call.respond(HttpStatusCode.OK, "Result saved successfully!")
+                } catch (ex: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Cannot save results: ${ex.message}")
+                }
             }
         }
     }

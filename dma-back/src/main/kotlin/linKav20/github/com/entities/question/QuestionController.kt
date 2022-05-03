@@ -32,6 +32,10 @@ fun saveQuestions(category: CategoryModel, categoryEntity: CategoryEntity) {
     }
 }
 
+fun findQuestionById(id:Long) = transaction {
+    QuestionEntity.findById(id)
+}
+
 fun getQuestions(categoryEntity: CategoryEntity): List<QuestionModel> {
     val questionEntities = getQuestionEntities(categoryEntity.categoryId.toLong())
     val questions = toQuestionModels(questionEntities)

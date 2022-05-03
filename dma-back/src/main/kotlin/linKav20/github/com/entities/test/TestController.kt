@@ -21,11 +21,14 @@ fun saveTest(test: TestModel) {
         val testEntity = TestEntity.new {
             name = test.name
             description = test.description
-            creator = findUserByLogin(test.creator)!!
-            responsible = findUserByLogin(test.responsible)!!
+            creator = findUserByLogin(test.creator)
+                ?: throw NullPointerException("Cannot find user with login ${test.creator.login} in system")
+            responsible = findUserByLogin(test.responsible)
+                ?: throw NullPointerException("Cannot find user with login ${test.responsible.login} in system")
             creationDate = test.creationDate
             lastModifiedDate = test.lastModifiedDate
-            lastModifiedUser = findUserByLogin(test.lastModifiedUser)!!
+            lastModifiedUser = findUserByLogin(test.lastModifiedUser)
+                ?: throw NullPointerException("Cannot find user with login ${test.lastModifiedUser.login} in system")
             testState = test.testState.toString()
         }
         savePassings(test.passing, testEntity)
@@ -59,7 +62,7 @@ fun getTest(id: Int): TestModel? {
         } else {
             null
         }
-    } ?: return null
+    } ?: throw NullPointerException("Cannot find test with ID $id in system")
 
     return toTestModel(saved)
 }

@@ -31,6 +31,13 @@ fun getAnswers(questionEntity: QuestionEntity): List<AnswerModel> {
     return answers
 }
 
+fun findAnswerById(id: Long): AnswerEntity? {
+    val answer = transaction {
+        AnswerEntity.findById(id)
+    }
+    return answer
+}
+
 fun toAnswerModel(answerEntity: AnswerEntity) =
     AnswerModel(id = answerEntity.answerId, text = answerEntity.text, weight = answerEntity.weight)
 
