@@ -1,6 +1,6 @@
 package linKav20.github.com.entities.temp
 
-import linKav20.github.com.entities.user.tables.UserEntity
+import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun addTestUsers(){

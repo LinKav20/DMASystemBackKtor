@@ -8,7 +8,7 @@ import linKav20.github.com.entities.results.tables.ResultsTable
 import linKav20.github.com.entities.test.tables.TestsTable
 import linKav20.github.com.entities.user.passings.tables.PassingsTable
 import linKav20.github.com.entities.user.redactors.tables.RedactorsTable
-import linKav20.github.com.entities.user.tables.UsersTable
+import linKav20.github.com.entities.user.basicUser.tables.UsersTable
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 

@@ -41,6 +41,21 @@ fun toPassingsToString(passingEntities: List<PassingEntity>): List<String> {
     return passings
 }
 
+fun updatePassings(passings: List<String>, testEntity: TestEntity) {
+    val passingsToAdd = passingsToAdd(passings, testEntity)
+    val passingsToRemove = passingToRemove(passings, testEntity)
+    savePassings(passingsToAdd, testEntity)
+    removePassings(passingsToRemove)
+}
+
+fun removePassings(passings: MutableList<String>){
+    for(passing in passings){
+        transaction {
+            findPassingByMail(passing)?.delete()
+        }
+    }
+}
+
 fun findPassingByMail(mail: String): PassingEntity? {
     val query = querySQLFindPassingByMail(mail)
     val passings = transaction {
@@ -51,6 +66,7 @@ fun findPassingByMail(mail: String): PassingEntity? {
     }
     return passing
 }
+
 
 private fun getPassingsEntities(id: Long): List<PassingEntity> {
     val query = querySQLPassings(id)
@@ -70,4 +86,25 @@ private fun querySQLPassings(id: Long) = transaction {
     PassingsTable.select {
         PassingsTable.test eq id
     }
+}
+
+private fun passingsToAdd(passings: List<String>, testEntity: TestEntity): MutableList<String> {
+    val passingsToAdd = passings.toMutableList()
+    val passingEntities = getPassingsEntities(testEntity.testId.toLong())
+    for (passing in passingEntities) {
+        transaction {
+            passingsToAdd.remove(passing.mail)
+        }
+    }
+    return passingsToAdd
+}
+
+private fun passingToRemove(passings: List<String>, testEntity: TestEntity): MutableList<String> {
+    val passingsToRemove = toPassingsToString(getPassingsEntities(testEntity.testId.toLong())).toMutableList()
+    for (passing in passings) {
+        transaction {
+            passingsToRemove.remove(passing)
+        }
+    }
+    return passingsToRemove
 }

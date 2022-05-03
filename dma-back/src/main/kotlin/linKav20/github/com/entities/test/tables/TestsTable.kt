@@ -1,6 +1,6 @@
 package linKav20.github.com.entities.test.tables
 
-import linKav20.github.com.entities.user.tables.UsersTable
+import linKav20.github.com.entities.user.basicUser.tables.UsersTable
 import org.jetbrains.exposed.dao.id.LongIdTable
 
 object TestsTable : LongIdTable() {

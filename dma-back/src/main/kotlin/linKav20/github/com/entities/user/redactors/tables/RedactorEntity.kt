@@ -1,7 +1,7 @@
 package linKav20.github.com.entities.user.redactors.tables
 
 import linKav20.github.com.entities.test.tables.TestEntity
-import linKav20.github.com.entities.user.tables.UserEntity
+import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

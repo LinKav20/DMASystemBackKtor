@@ -1,4 +1,4 @@
-package linKav20.github.com.entities.user.tables
+package linKav20.github.com.entities.user.basicUser.tables
 
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass

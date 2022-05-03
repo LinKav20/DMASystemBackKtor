@@ -16,7 +16,7 @@ import linKav20.github.com.entities.test.*
 import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.user.findUserByLogin
 import linKav20.github.com.entities.user.models.UserModel
-import linKav20.github.com.entities.user.tables.UserEntity
+import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 
 fun Application.configureRoutingTests() {
     val basePath = "test"
@@ -64,6 +64,40 @@ fun Application.configureRoutingTests() {
             }
 
             call.respond(HttpStatusCode.OK, gson.toJson(getTest1()))
+        }
+
+        put("/$basePath"){
+            if (call.request.queryParameters["id"] != null) {
+                val id = try {
+                    call.request.queryParameters["id"]!!.toInt()
+                } catch (ex: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "ID must be integer value")
+                }
+
+                val data = call.receive<String>()
+
+                var newTest: TestModel? = null
+                try {
+                    newTest = gson.fromJson(data, TestModel::class.java)
+                } catch (ex: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Incorrect test format")
+                }
+
+                if (newTest == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Test is null")
+                }
+
+                if (id as Int <= 0) call.respond(HttpStatusCode.BadRequest, "ID must be greater than 0")
+                val test = try {
+                    updateTest(id, newTest!!)
+                } catch (ex: Exception) {
+                    call.respond(HttpStatusCode.NotFound, "Cannot find test with ID $id")
+                }
+
+                call.respond(HttpStatusCode.OK, gson.toJson(getTest(id as Int)))
+            }
+
+            call.respond(HttpStatusCode.OK, "Nothing to update")
         }
 
         authenticate("auth-jwt") {
