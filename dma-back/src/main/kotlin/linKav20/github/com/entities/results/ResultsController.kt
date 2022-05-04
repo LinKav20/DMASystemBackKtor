@@ -55,3 +55,24 @@ fun saveResult(passingEntity: PassingEntity, passingChoice: PassingChoice) {
     }
 }
 
+fun getCountAllPassedTest(id: Long) = run { getAllPassedTest(id).count() }
+
+fun getAllPassedTest(id: Long): List<String> {
+    val query = querySQLAllPassedTest(id)
+    val passed = transaction {
+        ResultEntity.wrapRows(query).toList()
+    }
+    val result = mutableListOf<String>()
+    transaction {
+        for (pass in passed) {
+            result.add(pass.passing.mail)
+        }
+    }
+    return result.distinct()
+}
+
+private fun querySQLAllPassedTest(id: Long) = transaction {
+    ResultsTable.select {
+        ResultsTable.test eq id
+    }.withDistinct()
+}

@@ -1,8 +1,7 @@
-package linKav20.github.com.entities.user.models
+package linKav20.github.com.entities.user.basicUser.models
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.*
-import java.lang.reflect.Modifier
 
 @Serializable
 data class UserModel(

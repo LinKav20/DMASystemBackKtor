@@ -1,13 +1,10 @@
 package linKav20.github.com.entities.test.models
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import linKav20.github.com.entities.category.models.CategoryModel
 import linKav20.github.com.entities.test.TestState
-import linKav20.github.com.entities.user.models.UserModel
-import java.util.*
+import linKav20.github.com.entities.user.basicUser.models.UserModel
 
 @Serializable
 data class TestModel(

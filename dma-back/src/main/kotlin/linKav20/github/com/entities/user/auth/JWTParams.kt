@@ -2,7 +2,7 @@ package linKav20.github.com.entities.user.api.auth
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import linKav20.github.com.entities.user.models.UserModel
+import linKav20.github.com.entities.user.basicUser.models.UserModel
 import java.util.*
 
 const val secret = "DMA-SYSTEM"

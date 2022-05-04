@@ -15,7 +15,7 @@ import linKav20.github.com.entities.temp.getTest1
 import linKav20.github.com.entities.test.*
 import linKav20.github.com.entities.test.models.TestModel
 import linKav20.github.com.entities.user.findUserByLogin
-import linKav20.github.com.entities.user.models.UserModel
+import linKav20.github.com.entities.user.basicUser.models.UserModel
 import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 
 fun Application.configureRoutingTests() {

@@ -5,6 +5,7 @@ import linKav20.github.com.entities.results.analyze.api.configureRoutingAnalyze
 import linKav20.github.com.entities.sender.configureRoutingSend
 import linKav20.github.com.entities.test.api.configureRoutingTests
 import linKav20.github.com.entities.user.api.configureRoutingUsers
+import linKav20.github.com.entities.user.passings.api.configureRoutePass
 
 fun Application.configureRouting(){
     configureBaseRouting()
@@ -12,4 +13,5 @@ fun Application.configureRouting(){
     configureRoutingTests()
     configureRoutingAnalyze()
     configureRoutingSend()
+    configureRoutePass()
 }

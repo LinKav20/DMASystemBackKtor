@@ -5,7 +5,7 @@ import linKav20.github.com.entities.category.models.CategoryModel
 import linKav20.github.com.entities.question.models.QuestionModel
 import linKav20.github.com.entities.test.TestState
 import linKav20.github.com.entities.test.models.TestModel
-import linKav20.github.com.entities.user.models.UserModel
+import linKav20.github.com.entities.user.basicUser.models.UserModel
 
 
 val answer1 = AnswerModel(1, "pink", 5)

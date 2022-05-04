@@ -3,12 +3,11 @@ package linKav20.github.com.entities.user.redactors
 import linKav20.github.com.entities.test.tables.TestEntity
 import linKav20.github.com.entities.test.tables.TestsTable
 import linKav20.github.com.entities.user.findUserByLogin
-import linKav20.github.com.entities.user.models.UserModel
+import linKav20.github.com.entities.user.basicUser.models.UserModel
 import linKav20.github.com.entities.user.redactors.tables.RedactorEntity
 import linKav20.github.com.entities.user.redactors.tables.RedactorsTable
 import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 import linKav20.github.com.entities.user.basicUser.tables.UsersTable
-import linKav20.github.com.entities.user.passings.tables.PassingEntity
 import linKav20.github.com.entities.user.toUserModel
 import org.jetbrains.exposed.sql.JoinType
 import org.jetbrains.exposed.sql.select

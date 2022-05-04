@@ -9,7 +9,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import linKav20.github.com.entities.temp.addTestUsers
 import linKav20.github.com.entities.user.*
-import linKav20.github.com.entities.user.models.UserModel
+import linKav20.github.com.entities.user.basicUser.models.UserModel
 
 fun Application.configureRoutingAuth() {
     installAuth()

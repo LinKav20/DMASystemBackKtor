@@ -1,6 +1,6 @@
 package linKav20.github.com.entities.user
 
-import linKav20.github.com.entities.user.models.UserModel
+import linKav20.github.com.entities.user.basicUser.models.UserModel
 import linKav20.github.com.entities.user.basicUser.tables.UserEntity
 import linKav20.github.com.entities.user.basicUser.tables.UsersTable
 import org.jetbrains.exposed.sql.and
