@@ -13,24 +13,8 @@ import linKav20.github.com.entities.user.basicUser.models.UserModel
 
 fun Application.configureRoutingAuth() {
     installAuth()
-    addTestUsers()
 
     routing {
-        post("/check") {
-            var user: UserModel? = null
-
-            try {
-                user = call.receive<UserModel>()
-            } catch (ex: Exception) {
-                call.respond(HttpStatusCode.BadRequest, "Incorrect user format")
-            }
-
-            if (user != null && findUser(user) != null) {
-                call.respond(HttpStatusCode.OK, user)
-            } else {
-                call.respond(HttpStatusCode.Unauthorized, "User not here")
-            }
-        }
 
         post("/login") {
             var user: UserModel? = null

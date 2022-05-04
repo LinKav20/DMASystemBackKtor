@@ -7,7 +7,7 @@ import linKav20.github.com.core.routing.configureRouting
 import linKav20.github.com.core.serverSettings
 
 fun main() {
-    embeddedServer(Netty, port = 8000, host = "0.0.0.0") {
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
         serverSettings()
     }.start(wait = true)
 }

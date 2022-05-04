@@ -14,6 +14,7 @@ plugins {
 
 group = "linKav20.github.com"
 version = "0.0.1"
+
 application {
     mainClass.set("linKav20.github.com.ApplicationKt")
 
@@ -24,6 +25,10 @@ application {
 repositories {
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
+}
+
+tasks {
+    create("stage").dependsOn("installDist")
 }
 
 dependencies {
