@@ -4,6 +4,7 @@ val logback_version: String by project
 val exposed_version: String by project
 val h2_version: String by project
 val postgresql_version: String by project
+val email_version: String by project
 
 plugins {
     application
@@ -46,10 +47,11 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
 
     implementation("com.h2database:h2:$h2_version")
-    implementation("org.apache.commons:commons-email:1.5")
     implementation("org.postgresql:postgresql:$postgresql_version")
+
+    implementation("org.apache.commons:commons-email:$email_version")
 
     implementation("io.ktor:ktor-server-html-builder:$ktor_version")
 
-    implementation("org.apache.commons:commons-email:1.5")
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
 }
