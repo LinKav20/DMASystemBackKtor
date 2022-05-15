@@ -8,6 +8,7 @@ import linKav20.github.com.entities.question.tables.QuestionEntity
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
+
 fun saveAnswer(answerModel: AnswerModel, questionEntity: QuestionEntity) {
     transaction {
         AnswerEntity.new {
